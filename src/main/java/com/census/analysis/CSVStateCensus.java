@@ -1,21 +1,20 @@
 package com.census.analysis;
 
+import com.opencsv.bean.CsvBindByName;
+
 public class CSVStateCensus {
+	@CsvBindByName(column = "State", required = true)
+    public String state;
 
-	public String state;
-	public long population;
-	public long areaInSqKm;
-	public long densityPerSqKm;
+    @CsvBindByName(column = "Population", required = true)
+    public int population;
 
-	public CSVStateCensus() {
-	}
+    @CsvBindByName(column = "AreaInSqKm", required = true)
+    public int areaInSqKm;
 
-	public CSVStateCensus(String state, long population, long areaInSqKm, long densityPerSqKm) {
-		this.state = state;
-		this.population = population;
-		this.areaInSqKm = areaInSqKm;
-		this.densityPerSqKm = densityPerSqKm;
-	}
+    @CsvBindByName(column = "DensityPerSqKm", required = true)
+    public int densityPerSqKm;
+
 
 	@Override
 	public String toString() {
