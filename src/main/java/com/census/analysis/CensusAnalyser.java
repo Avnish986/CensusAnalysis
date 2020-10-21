@@ -13,8 +13,8 @@ import com.opencsv.bean.CsvToBeanBuilder;
 public class CensusAnalyser<E> {
 	public int loadCSVFile(Path path) throws CensusException {
 		try (Reader reader = Files.newBufferedReader(path);) {
-
-			Iterator<CSVStateCensus> iterator = (Iterator<CSVStateCensus>) new OpenCSVBuilder().getFileIterator(reader,
+			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder(); 
+			Iterator<CSVStateCensus> iterator = (Iterator<CSVStateCensus>) csvBuilder.getFileIterator(reader,
 					CSVStateCensus.class);
 			return filesize(iterator);
 		} catch (IOException e) {
@@ -24,8 +24,8 @@ public class CensusAnalyser<E> {
 
 	public int loadStateCSVFile(Path path) throws CensusException {
 		try (Reader reader = Files.newBufferedReader(path)) {
-
-			Iterator<StateCode> it = (Iterator<StateCode>) new OpenCSVBuilder().getFileIterator(reader,
+			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder(); 
+			Iterator<StateCode> it = (Iterator<StateCode>) csvBuilder.getFileIterator(reader,
 					StateCode.class);
 			return filesize(it);
 		} catch (IOException e) {
