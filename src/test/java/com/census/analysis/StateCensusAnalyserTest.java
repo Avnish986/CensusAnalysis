@@ -12,7 +12,7 @@ public class StateCensusAnalyserTest {
 	public static final String WRONG_STATE_CENSUS_DATA_HEADER = "StateCodee.csv";
 	public static final String WRONG_STATE_CENSUS_DATA_TYPE = "StateCensus.txt";
 
-	StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+	CensusAnalyser stateCensusAnalyser = new CensusAnalyser();
 
 	@Test
 	public void ensureNoOfRecordMatches() throws CensusException {
