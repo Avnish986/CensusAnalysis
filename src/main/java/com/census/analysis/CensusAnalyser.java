@@ -15,14 +15,8 @@ public class CensusAnalyser<E> {
 	public int loadCSVFile(Path path) throws CensusException {
 		try (Reader reader = Files.newBufferedReader(path);) {
 
-			Iterator<CSVStateCensus> iterator = (Iterator<CSVStateCensus>) this.getFileIterator(reader,
-					CSVStateCensus.class);
-			ArrayList<CSVStateCensus> stateCensusList = new ArrayList<>();
-			while (iterator.hasNext()) {
-				stateCensusList.add(iterator.next());
-			}
-			System.out.println(stateCensusList);
-			return stateCensusList.size();
+			Iterator<CSVStateCensus> iterator = (Iterator<CSVStateCensus>) this.getFileIterator(reader,CSVStateCensus.class);
+			return filesize(iterator);
 		} catch (IOException e) {
 			throw new CensusException("File not found", CensusException.ExceptionType.WRONG_CSV);
 		}
@@ -32,24 +26,30 @@ public class CensusAnalyser<E> {
 		try (Reader reader = Files.newBufferedReader(path)) {
 
 			Iterator<StateCode> it = (Iterator<StateCode>) this.getFileIterator(reader, StateCode.class);
-			ArrayList<StateCode> stateCensusList = new ArrayList<>();
-			while (it.hasNext()) {
-				stateCensusList.add(it.next());
-			}
-			for (StateCode x : stateCensusList) {
-				System.out.println(x);
-			}
-			return stateCensusList.size();
+			return filesize(it);
 		} catch (IOException e) {
 			throw new CensusException("File not found", CensusException.ExceptionType.WRONG_CSV);
 		}
 
 	}
 
+	private <E> int filesize(Iterator<E> iterator) {
+		ArrayList<E> stateCensusList = new ArrayList<E>();
+		while (iterator.hasNext()) {
+
+			stateCensusList.add(iterator.next());
+
+		}
+		System.out.println(stateCensusList);
+		return stateCensusList.size();
+	}
+
 	private Iterator<E> getFileIterator(Reader reader, Class csvClass) throws CensusException {
 		try {
-			CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader).withType(csvClass).withIgnoreLeadingWhiteSpace(true)
-					.build();
+			CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader)
+										.withType(csvClass)
+										.withIgnoreLeadingWhiteSpace(true)
+										.build();
 
 			return csvToBean.iterator();
 		} catch (RuntimeException e) {
