@@ -8,7 +8,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 
 public class OpenCSVBuilder<E> implements ICSVBuilder<E> {
 	@Override
-	public Iterator<E> getFileIterator(Reader reader, Class csvClass) throws CensusException {
+	public Iterator<E> getFileIterator(Reader reader, Class csvClass) throws WrongCSVException {
 		try {
 			CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader)
 										.withType(csvClass)
@@ -17,7 +17,7 @@ public class OpenCSVBuilder<E> implements ICSVBuilder<E> {
 
 			return csvToBean.iterator();
 		} catch (RuntimeException e) {
-			throw new CensusException("File internal data not valid", CensusException.ExceptionType.WRONG_HEADER);
+			throw new WrongCSVException("File internal data not valid", WrongCSVException.ExceptionType.WRONG_HEADER);
 		}
 	}
 }

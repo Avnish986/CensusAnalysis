@@ -13,7 +13,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 
 public class StateCensusAnalyser {
 
-	public int loadCSVFile(Path path) throws CensusException {
+	public int loadCSVFile(Path path) throws WrongCSVException {
 		try {
 			Reader reader = Files.newBufferedReader(path);
 			CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder(reader).withType(CSVStateCensus.class)
@@ -27,9 +27,9 @@ public class StateCensusAnalyser {
 			System.out.println(stateCensusList);
 			return stateCensusList.size();
 		} catch (IOException e) {
-			throw new CensusException("File not found", CensusException.ExceptionType.WRONG_CSV);
+			throw new WrongCSVException("File not found", WrongCSVException.ExceptionType.WRONG_CSV);
 		} catch (RuntimeException e) {
-			throw new CensusException("File internal data not valid", CensusException.ExceptionType.WRONG_HEADER);
+			throw new WrongCSVException("File internal data not valid", WrongCSVException.ExceptionType.WRONG_HEADER);
 		}
 	}
 }

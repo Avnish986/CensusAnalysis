@@ -13,26 +13,26 @@ public class StateCodeAnalyserTest {
 	CensusAnalyser stateCodeAnalyser = new CensusAnalyser();
 
 	@Test
-	public void ensureNoOfRecordMatches() throws CensusException {
+	public void ensureNoOfRecordMatches() throws WrongCSVException {
 		int records = stateCodeAnalyser.loadStateCSVFile(Paths.get(STATE_CODE_DATA));
 		Assert.assertEquals(37, records);
 	}
 
 	@Test
-	public void checkWrongPath() throws CensusException {
+	public void checkWrongPath() throws WrongCSVException {
 		try {
 			stateCodeAnalyser.loadStateCSVFile(Paths.get(WRONG_STATE_CODE_DATA));
-		} catch (CensusException e) {
-			Assert.assertEquals(CensusException.ExceptionType.WRONG_CSV, e.type);
+		} catch (WrongCSVException e) {
+			Assert.assertEquals(WrongCSVException.ExceptionType.WRONG_CSV, e.type);
 		}
 	}
 
 	@Test
-	public void checkWrongHeader() throws CensusException {
+	public void checkWrongHeader() throws WrongCSVException {
 		try {
 			stateCodeAnalyser.loadStateCSVFile(Paths.get(WRONG_STATE_CODE_DATA_HEADER));
-		} catch (CensusException e) {
-			Assert.assertEquals(CensusException.ExceptionType.WRONG_HEADER, e.type);
+		} catch (WrongCSVException e) {
+			Assert.assertEquals(WrongCSVException.ExceptionType.WRONG_HEADER, e.type);
 
 		}
 	}

@@ -11,25 +11,25 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 public class CensusAnalyser<E> {
-	public int loadCSVFile(Path path) throws CensusException {
+	public int loadCSVFile(Path path) throws WrongCSVException {
 		try (Reader reader = Files.newBufferedReader(path);) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder(); 
 			Iterator<CSVStateCensus> iterator = (Iterator<CSVStateCensus>) csvBuilder.getFileIterator(reader,
 					CSVStateCensus.class);
 			return filesize(iterator);
 		} catch (IOException e) {
-			throw new CensusException("File not found", CensusException.ExceptionType.WRONG_CSV);
+			throw new WrongCSVException("File not found", WrongCSVException.ExceptionType.WRONG_CSV);
 		}
 	}
 
-	public int loadStateCSVFile(Path path) throws CensusException {
+	public int loadStateCSVFile(Path path) throws WrongCSVException {
 		try (Reader reader = Files.newBufferedReader(path)) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder(); 
 			Iterator<StateCode> it = (Iterator<StateCode>) csvBuilder.getFileIterator(reader,
 					StateCode.class);
 			return filesize(it);
 		} catch (IOException e) {
-			throw new CensusException("File not found", CensusException.ExceptionType.WRONG_CSV);
+			throw new WrongCSVException("File not found", WrongCSVException.ExceptionType.WRONG_CSV);
 		}
 	}
 

@@ -1,5 +1,7 @@
 package com.census.analysis;
 
+import static org.junit.Assert.assertEquals;
+
 import java.nio.file.Paths;
 
 import org.junit.Assert;
@@ -15,36 +17,37 @@ public class StateCensusAnalyserTest {
 	CensusAnalyser stateCensusAnalyser = new CensusAnalyser();
 
 	@Test
-	public void ensureNoOfRecordMatches() throws CensusException {
+	public void ensureNoOfRecordMatches() throws WrongCSVException {
 		int records = stateCensusAnalyser.loadCSVFile(Paths.get(STATE_CENSUS_DATA));
 		Assert.assertEquals(29, records);
+		
 	}
 
 	@Test
-	public void checkWrongPath() throws CensusException {
+	public void checkWrongPath() throws WrongCSVException {
 		try {
 			stateCensusAnalyser.loadCSVFile(Paths.get(WRONG_STATE_CENSUS_DATA));
-		} catch (CensusException e) {
-			Assert.assertEquals(CensusException.ExceptionType.WRONG_CSV, e.type);
+		} catch (WrongCSVException e) {
+			Assert.assertEquals(WrongCSVException.ExceptionType.WRONG_CSV, e.type);
 		}
 	}
 
 	@Test
-	public void checkWrongHeader() throws CensusException {
+	public void checkWrongHeader() throws WrongCSVException {
 		try {
 			stateCensusAnalyser.loadCSVFile(Paths.get(WRONG_STATE_CENSUS_DATA_HEADER));
-		} catch (CensusException e) {
-			Assert.assertEquals(CensusException.ExceptionType.WRONG_HEADER, e.type);
+		} catch (WrongCSVException e) {
+			Assert.assertEquals(WrongCSVException.ExceptionType.WRONG_HEADER, e.type);
 
 		}
 	}
 
 	@Test
-	public void checkWrongType() throws CensusException {
+	public void checkWrongType() throws WrongCSVException {
 		try {
 			stateCensusAnalyser.loadCSVFile(Paths.get(WRONG_STATE_CENSUS_DATA_TYPE));
-		} catch (CensusException e) {
-			Assert.assertEquals(CensusException.ExceptionType.WRONG_TYPE, e.type);
+		} catch (WrongCSVException e) {
+			Assert.assertEquals(WrongCSVException.ExceptionType.WRONG_TYPE, e.type);
 
 		}
 	}
