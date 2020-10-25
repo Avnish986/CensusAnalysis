@@ -19,7 +19,7 @@ public class StateCensusAnalyserTest {
 	@Test
 	public void ensureNoOfRecordMatches() throws WrongCSVException {
 		int records = stateCensusAnalyser.loadCSVFile(Paths.get(STATE_CENSUS_DATA));
-		Assert.assertEquals(29, records);
+		Assert.assertEquals(30, records);
 		
 	}
 
