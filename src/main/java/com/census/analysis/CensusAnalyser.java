@@ -6,17 +6,27 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.StreamSupport;
+
+import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 public class CensusAnalyser<E> {
+	List<CSVStateCensus> csvCensusList=null;
+	List<StateCode> csvStateList= null;
+
+	public CensusAnalyser() {
+		this.csvCensusList = new ArrayList<>();
+		this.csvStateList = new ArrayList<>();
+
+	}
 	public int loadCSVFile(Path path) throws WrongCSVException {
-		try (Reader reader = Files.newBufferedReader(path);) {
+		try (Reader reader = Files.newBufferedReader(path);) {		
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder(); 
-			Iterator<CSVStateCensus> iterator = (Iterator<CSVStateCensus>) csvBuilder.getFileIterator(reader,
-					CSVStateCensus.class);
-			return filesize(iterator);
+			csvCensusList = csvBuilder.getCSVList(reader, CSVStateCensus.class);
+			return csvCensusList.size();
 		} catch (IOException e) {
 			throw new WrongCSVException("File not found", WrongCSVException.ExceptionType.WRONG_CSV);
 		}
@@ -25,9 +35,8 @@ public class CensusAnalyser<E> {
 	public int loadStateCSVFile(Path path) throws WrongCSVException {
 		try (Reader reader = Files.newBufferedReader(path)) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder(); 
-			Iterator<StateCode> it = (Iterator<StateCode>) csvBuilder.getFileIterator(reader,
-					StateCode.class);
-			return filesize(it);
+			csvStateList = csvBuilder.getCSVList(reader, StateCode.class);
+			return csvStateList.size();
 		} catch (IOException e) {
 			throw new WrongCSVException("File not found", WrongCSVException.ExceptionType.WRONG_CSV);
 		}

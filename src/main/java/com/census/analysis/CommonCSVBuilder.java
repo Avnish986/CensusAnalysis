@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -18,6 +19,12 @@ public class CommonCSVBuilder<E> implements ICSVBuilder<E> {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	@Override
+	public List<E> getCSVList(Reader reader, Class csvClass) throws WrongCSVException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }
