@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.google.gson.Gson;
+
 public class StateCensusAnalyserTest {
 
 	public static final String STATE_CENSUS_DATA = "StateCensus.csv";
@@ -20,7 +22,7 @@ public class StateCensusAnalyserTest {
 	public void ensureNoOfRecordMatches() throws WrongCSVException {
 		int records = stateCensusAnalyser.loadCSVFile(Paths.get(STATE_CENSUS_DATA));
 		Assert.assertEquals(29, records);
-		
+
 	}
 
 	@Test
@@ -50,5 +52,13 @@ public class StateCensusAnalyserTest {
 			Assert.assertEquals(WrongCSVException.ExceptionType.WRONG_TYPE, e.type);
 
 		}
+	}
+
+	@Test
+	public void censusSortedOnState() throws WrongCSVException {
+		stateCensusAnalyser.loadCSVFile(Paths.get(STATE_CENSUS_DATA));
+		String sortedCensusData = stateCensusAnalyser.getSortedCensuByState();
+		CSVStateCensus[] censusCsv = new Gson().fromJson(sortedCensusData, CSVStateCensus[].class);
+		Assert.assertEquals("Andhra Pradesh", censusCsv[0].state);
 	}
 }
