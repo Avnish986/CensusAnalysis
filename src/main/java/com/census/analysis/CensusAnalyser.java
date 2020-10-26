@@ -35,7 +35,7 @@ public class CensusAnalyser<E> {
 			throw new WrongCSVException("File not found", WrongCSVException.ExceptionType.WRONG_CSV);
 		}
 		catch (RuntimeException e) {
-			throw new WrongCSVException("File data not proper", WrongCSVException.ExceptionType.WRONG_CSV);
+			throw new WrongCSVException("File data not proper", WrongCSVException.ExceptionType.WRONG_HEADER);
 
 		} catch (WrongCSVException e) {
 			throw new WrongCSVException(e.getMessage(), WrongCSVException.ExceptionType.WRONG_HEADER);
@@ -101,5 +101,14 @@ public class CensusAnalyser<E> {
 		}
 		Collections.sort(csvStateList, Comparator.comparing(code -> code.stateCode));
 		return new Gson().toJson(csvStateList);
+	}
+	
+	public String getStatePopulationWiseSortedCensusData() throws WrongCSVException {
+		if(csvCensusList == null || csvCensusList.size() == 0) {
+			throw new WrongCSVException("File is empty", WrongCSVException.ExceptionType.WRONG_HEADER);
+		}
+		Collections.sort(csvCensusList, Comparator.comparing(census -> census.getPopulationData()));
+		System.out.println(csvCensusList);
+		return new Gson().toJson(csvCensusList);
 	}
 }
