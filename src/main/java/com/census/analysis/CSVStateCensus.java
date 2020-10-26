@@ -4,17 +4,21 @@ import com.opencsv.bean.CsvBindByName;
 
 public class CSVStateCensus {
 	@CsvBindByName(column = "State", required = true)
-    public String state;
+	public String state;
 
-    @CsvBindByName(column = "Population", required = true)
-    public int population;
+	@CsvBindByName(column = "Population", required = true)
+	public String population;
 
-    @CsvBindByName(column = "AreaInSqKm", required = true)
-    public int areaInSqKm;
+	@CsvBindByName(column = "AreaInSqKm", required = true)
+	public int areaInSqKm;
 
-    @CsvBindByName(column = "DensityPerSqKm", required = true)
-    public int densityPerSqKm;
+	@CsvBindByName(column = "DensityPerSqKm", required = true)
+	public int densityPerSqKm;
 
+	public int getPopulationData() {
+		int pop = Integer.parseInt(population);
+		return pop;
+	}
 
 	@Override
 	public String toString() {
