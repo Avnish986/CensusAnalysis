@@ -15,7 +15,7 @@ public class StateCodeAnalyserTest {
 	@Test
 	public void ensureNoOfRecordMatches() throws WrongCSVException {
 		int records = stateCodeAnalyser.loadStateCSVFile(Paths.get(STATE_CODE_DATA));
-		Assert.assertEquals(38, records);
+		Assert.assertEquals(37, records);
 	}
 
 	@Test
