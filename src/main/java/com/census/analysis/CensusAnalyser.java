@@ -119,4 +119,13 @@ public class CensusAnalyser<E> {
 		System.out.println(csvCensusList);
 		return new Gson().toJson(csvCensusList);
 	}
+	
+	public String getStateAreaWiseSortedCensusData() throws WrongCSVException {
+		if(csvCensusList == null || csvCensusList.size() == 0) {
+			throw new WrongCSVException("File is empty", WrongCSVException.ExceptionType.WRONG_HEADER);
+		}
+		Collections.sort(csvCensusList, Comparator.comparing(census -> census.getAreaData()));
+		System.out.println(csvCensusList);
+		return new Gson().toJson(csvCensusList);
+	}
 }

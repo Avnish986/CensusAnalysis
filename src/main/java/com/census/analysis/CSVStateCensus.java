@@ -22,6 +22,9 @@ public class CSVStateCensus {
 	public int getPopulationDensity() {		
 		return densityPerSqKm;
 	}
+	public int getAreaData() {		
+		return areaInSqKm;
+	}
 
 	@Override
 	public String toString() {
