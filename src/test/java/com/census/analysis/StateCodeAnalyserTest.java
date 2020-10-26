@@ -5,6 +5,8 @@ import java.nio.file.Paths;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.google.gson.Gson;
+
 public class StateCodeAnalyserTest {
 	public static final String STATE_CODE_DATA = "StateCode1.csv";
 	public static final String WRONG_STATE_CODE_DATA = "src/main/java/com/StateCode.csv";
@@ -35,5 +37,13 @@ public class StateCodeAnalyserTest {
 			Assert.assertEquals(WrongCSVException.ExceptionType.WRONG_HEADER, e.type);
 
 		}
+	}
+
+	@Test
+	public void censusSortedOnStateCode() throws WrongCSVException {
+		stateCodeAnalyser.loadStateCSVFile(Paths.get(STATE_CODE_DATA));
+		String sortedCensusData = stateCodeAnalyser.getStateCodeWiseSortedCensusData();
+		StateCode[] censusCsv = new Gson().fromJson(sortedCensusData, StateCode[].class);
+		Assert.assertEquals("AD", censusCsv[0].stateCode);
 	}
 }
